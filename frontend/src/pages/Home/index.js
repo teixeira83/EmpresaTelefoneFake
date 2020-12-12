@@ -1,10 +1,14 @@
 import React from 'react'
-import { Banner } from '../../components/index';
-
+import { Banner, Map, Plans, Footer } from '../../components/index';
 
 export default function Home() {
     return (
-        <Banner />
+        <React.Fragment>
+            <Banner />
+            <Map />
+            <Plans />
+            <Footer />
+        </React.Fragment>
     )
 }
 

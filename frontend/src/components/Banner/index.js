@@ -1,7 +1,7 @@
 import React from 'react'
 import logo from '../../assets/img/logo.png';
 
-import { BannerContainer, BannerImage, Carousel, InformationContainer, Logo, Title } from './styles';
+import { BannerContainer, BannerImage, Carousel, InformationContainer, Logo, Title, NavBar, NavList, NavListOption } from './styles';
 
 import bannerImages from './images';
 
@@ -15,20 +15,25 @@ const settings = {
     adaptiveHeight: true
 };
 
-
-
-const Banner = () => (
-    <BannerContainer>
-        <InformationContainer>
-            <Logo src={logo} alt="Logo da empresa Vxtel"/>
-            <Title>Receba minutos para falar de graça para qualquer linha Vxtel.</Title>
-        </InformationContainer>
-        <Carousel {...settings}> 
-            {bannerImages.map((img) => {
-                return <BannerImage src={img} alt="Foto do Restaurante" />
-            })}
-        </Carousel>
-    </BannerContainer>
-);
-
-export default Banner;
+export default function Banner(){
+    return (
+        <BannerContainer>
+            <InformationContainer>
+                <NavBar>
+                    <Logo src={logo} alt="Logo da empresa Vxtel"/>
+                    <NavList>
+                        <NavListOption href="/">Home</NavListOption>
+                        <NavListOption href="/sobre">Sobre</NavListOption>
+                        <NavListOption href="/calculadora">Calculadora</NavListOption>
+                    </NavList>
+                </NavBar>
+                <Title>Receba minutos para falar de graça para qualquer linha Vxtel.</Title>
+            </InformationContainer>
+            <Carousel {...settings}> 
+                {bannerImages.map((img) => {
+                    return <BannerImage src={img} alt="Foto do Restaurante" />
+                })}
+            </Carousel>
+        </BannerContainer>
+    )
+}
