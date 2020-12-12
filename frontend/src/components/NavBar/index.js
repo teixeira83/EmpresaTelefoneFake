@@ -9,9 +9,9 @@ export default function NavBar() {
         <NavigationBar>
             <Logo src={logo} alt="Logo da empresa Vxtel"/>
             <NavList>
-                <NavListOption href="/">Home</NavListOption>
-                <NavListOption href="/sobre">Sobre</NavListOption>
-                <NavListOption href="/calculadora">Calculadora</NavListOption>
+                <NavListOption href="/">HOME</NavListOption>
+                <NavListOption href="/sobre">SOBRE</NavListOption>
+                <NavListOption href="/calculadora">CALCULADORA</NavListOption>
             </NavList>
         </NavigationBar>
     )    

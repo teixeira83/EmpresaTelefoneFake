@@ -18,12 +18,14 @@ export const Content = styled.span`
 export const Button = styled.button`
     font-size: 16px;
     margin: 30px 0;
-    width: 60%;
     background-color: ${COLORS.primary};
     border: 0px;
     color: #ffffff;
     padding: 15px;
     cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    align-items: center;
 `
 
 export const CardPlanContainer = styled.div`

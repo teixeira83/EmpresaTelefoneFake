@@ -12,6 +12,7 @@ export const NavigationBar = styled.nav`
     justify-content: space-between;
     background-color: ${COLORS.secondary};
     padding: 5px;
+    height: 50px;
 `
 
 export const NavList = styled.ul`
@@ -25,9 +26,11 @@ export const NavListOption = styled.a`
     margin: 0 5px;
     text-decoration: none;
     transition: 500 linear;
-    padding: 15px;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: bold;
 
     &:hover {
-        border-bottom: 5px solid #ffffff;
+        border-bottom: 5px solid ${COLORS.primary};
     }
 `
