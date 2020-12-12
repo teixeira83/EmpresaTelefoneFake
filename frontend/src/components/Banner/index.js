@@ -1,47 +1,21 @@
 import React from 'react'
-import styled from 'styled-components';
-import logo from '../../assets/logo.png';
-import Slider from 'react-slick';
+import logo from '../../assets/img/logo.png';
 
-import { COLORS } from '../../assets/css/settings/colors';
+import { BannerContainer, BannerImage, Carousel, InformationContainer, Logo, Title } from './styles';
 
-export const Logo = styled.img`
-    width: 120px;
-` 
-
-export const Title = styled.h1`
-    color: #ffffff;
-    /* font-family: Montserrat; */
-    font-size: 52px;
-`
-
-export const BannerContainer = styled.div`
-    width: 100vw;
-    height: 600px;
-    display:flex;
-    `
-
-export const InformationContainer = styled.div`
-    background-color: ${COLORS.secondary};
-    width: 50%;
-`
-
-export const Carousel = styled(Slider)`
-    .slick-slide {
-    }
-    
-    width: 50%;
-`;
+import bannerImages from './images';
 
 const settings = {
     dots: false,
     infinite: true,
     autoplay: true,
-    speed: 300,
-    slidesToShow: 4,
-    slidesToScroll: 4,
-    adaptiveHeight: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    adaptiveHeight: true
 };
+
+
 
 const Banner = () => (
     <BannerContainer>
@@ -49,7 +23,11 @@ const Banner = () => (
             <Logo src={logo} alt="Logo da empresa Vxtel"/>
             <Title>Receba minutos para falar de graça para qualquer linha Vxtel.</Title>
         </InformationContainer>
-        <Carousel {...settings}/>
+        <Carousel {...settings}> 
+            {bannerImages.map((img) => {
+                return <BannerImage src={img} alt="Foto do Restaurante" />
+            })}
+        </Carousel>
     </BannerContainer>
 );
 
