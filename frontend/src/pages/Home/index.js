@@ -1,9 +1,10 @@
 import React from 'react'
-import { Banner, Map, Plans, Footer } from '../../components/index';
+import { NavBar, Banner, Map, Plans, Footer } from '../../components/index';
 
 export default function Home() {
     return (
         <React.Fragment>
+            <NavBar />
             <Banner />
             <Map />
             <Plans />

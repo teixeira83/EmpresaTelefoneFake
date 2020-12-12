@@ -1,7 +1,5 @@
 import React from 'react'
-import logo from '../../assets/img/logo.png';
-
-import { BannerContainer, BannerImage, Carousel, InformationContainer, Logo, Title, NavBar, NavList, NavListOption } from './styles';
+import { BannerContainer, BannerImage, Carousel, InformationContainer, Title } from './styles';
 
 import bannerImages from './images';
 
@@ -18,15 +16,7 @@ const settings = {
 export default function Banner(){
     return (
         <BannerContainer>
-            <InformationContainer>
-                <NavBar>
-                    <Logo src={logo} alt="Logo da empresa Vxtel"/>
-                    <NavList>
-                        <NavListOption href="/">Home</NavListOption>
-                        <NavListOption href="/sobre">Sobre</NavListOption>
-                        <NavListOption href="/calculadora">Calculadora</NavListOption>
-                    </NavList>
-                </NavBar>
+            <InformationContainer>  
                 <Title>Receba minutos para falar de graça para qualquer linha Vxtel.</Title>
             </InformationContainer>
             <Carousel {...settings}> 

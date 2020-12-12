@@ -13,4 +13,5 @@ export const FooterContainer = styled.div`
 
 export const Logo = styled.img`
     width: 120px;
+    height: 50px;
 ` 
