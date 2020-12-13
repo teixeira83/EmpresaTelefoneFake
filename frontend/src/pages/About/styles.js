@@ -33,6 +33,6 @@ export const AboutContainer = styled.div`
     height: 100%;
     display:flex;
     flex-direction: row;
-    margin-top: 30px;
-    margin-bottom: 100px;
+    justify-content: center;
+    align-items: center;
 `

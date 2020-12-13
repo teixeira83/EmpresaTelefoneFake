@@ -1,4 +1,4 @@
-const dbsDump = [
+const dbsDumpSources = [
     {
         source: '011'   ,
         destinations: ['016','017','018'],
@@ -19,6 +19,30 @@ const dbsDump = [
         destinations: ['011'],
         taxs: [0.90]
     }
-]
+];
 
-module.exports = dbsDump;
+const dbsDumpPlans = [
+    {
+        title: 'FaleMais 30',
+        description: 'Ganhe 30 minutos para falar de graça durante o mês.',
+        minutes: 30,
+        tax: 10
+    },
+    {
+        title: 'FaleMais 60',
+        description: 'Ganhe 60 minutos para falar de graça durante o mês.',
+        minutes: 60,
+        tax: 10
+    },
+    {
+        title: 'FaleMais 120',
+        description: 'Ganhe 120 minutos para falar de graça durante o mês.',
+        minutes: 120,
+        tax: 10
+    }
+];
+
+module.exports = {
+    dbsDumpSources,
+    dbsDumpPlans
+};

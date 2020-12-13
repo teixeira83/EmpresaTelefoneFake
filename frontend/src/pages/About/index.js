@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { NavBar, Footer } from '../../components/index';
+import { NavBar } from '../../components/index';
 import { AboutContainer, CompanyImage, AboutTextContainer, AboutTextTitle, AboutTextContent} from './styles';
 import room from '../../assets/img/empresa.jpg';
 
@@ -17,7 +17,6 @@ export default function About() {
                     </AboutTextContent>
                 </AboutTextContainer>
             </AboutContainer>
-            <Footer />
         </React.Fragment>
 
     )

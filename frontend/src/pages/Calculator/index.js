@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavBar, Form, Footer } from '../../components/index';
+import { NavBar, Form } from '../../components/index';
 import { Container } from './styles';
 
 export default function Calculator() {
@@ -8,7 +8,6 @@ export default function Calculator() {
             <Container>
                 <NavBar />
                 <Form />
-                <Footer />
             </Container>
         </React.Fragment>
     )

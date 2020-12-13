@@ -1,13 +1,83 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { FormContainer, FormLine, Title, PriceContainer, Price, CloseIcon, PriceContainerRow } from './styles';
 
-import { FormContainer, FormLine, Title } from './styles';
+import { setSource, setSources } from '../../redux/modules/sources';
+import { setPlan, setPlans } from '../../redux/modules/plans';
+
+import taxDataService from '../../services/tax';
+
+import close from '../../assets/img/close.png';
 
 export default function Form() {
+    const dispatch = useDispatch();
 
-    const [source, setSource] = useState(null);
-    const [destiny, setDestiny] = useState(null);
-    const [connectionTime, setConnectionTime] = useState('');
-    const [plan, setPlan] = useState('');
+    const { sources, sourceSelected } = useSelector((state) => state.sources);
+    const { plans, planSelected } = useSelector((state) => state.plans);
+    const [destiny, setDestiny] = useState('');
+    const [destinys, setDestinys] = useState(['016','017','018']);
+    const [callTime, setCallTime] = useState(0);
+    const [showPrice, setShowPrice] = useState(false);
+    const [price, setPrice] = useState(0);
+
+    useEffect(() => {
+        async function getFormSources() {
+            const rawSources = await taxDataService.getAllSources();
+            const sourceDataList = rawSources.data;
+            const [firstSource] = rawSources.data;
+            
+            dispatch(setSource(firstSource.source));
+            dispatch(setSources(sourceDataList));
+
+        }
+        getFormSources()
+    },[]);
+
+    useEffect(() => {
+        async function getFormPlans() {
+            const rawPlans = await taxDataService.getAllPlans();
+            const planDataList = rawPlans.data;
+            const [firstPlan] = rawPlans.data;
+
+            dispatch(setPlan(firstPlan.minutes));
+            dispatch(setPlans(planDataList));
+        }
+        getFormPlans();
+    },[]);
+
+    function getDestinyOptions(origin) {
+        
+        const originSelected = sources.find((source) => {
+            return source.source === origin
+        });
+
+        const [firstDestination] = originSelected.destinations;
+        const destinationsOptions = originSelected.destinations;
+        setDestiny(firstDestination);
+        setDestinys(destinationsOptions);
+    };  
+
+    async function handleSubmit(event) {
+        
+        event.preventDefault();
+        const formObject = {
+            source: sourceSelected,
+            destination: destiny,
+            callTime: callTime,
+            plan: planSelected
+        }
+
+        const callInformation = await taxDataService.getCallInformation(formObject);
+        console.log(callInformation);
+        const callPrice = callInformation.data.callValue;
+        setPrice(parseFloat(callPrice));
+
+        
+    }
+
+    const closePriceContainer = () => {
+        setShowPrice(false);
+    }
 
     return (
         <FormContainer>
@@ -17,45 +87,59 @@ export default function Form() {
                     <label>
                         DDD Origem:
                     </label>
-                    <select value={source} onChange={(e) => setSource(e.target.value)}>
-                        <option value="laranja">011</option>
-                        <option value="limao">016</option>
-                        <option value="coco">017</option>
-                        <option value="manga">018</option>
+                    <select value={sourceSelected} onChange={e => {
+                        dispatch(setSource(e.target.value))
+                        getDestinyOptions(e.target.value);
+                    }}>
+                        ${sources.map((source) => {
+                            return <option key={source._id} value={source.source}>{source.source}</option>
+                        })}
                     </select>
                 </FormLine>
                 <FormLine>
                     <label>
                     DDD Destino:
                     </label>
-                    <select value={destiny} onChange={(e) => setDestiny(e.target.value)}>
-                        <option value="abacate">011</option>
-                        <option value="mexirica">016</option>
-                        <option value="abobrinha">017</option>
-                        <option value="maracuja">018</option>
+                    <select value={destiny} onChange={e => setDestiny(e.target.value)}>
+                        ${destinys.map((destiny) => {
+                            return <option key={destiny} value={destiny}>{destiny}</option>
+                        } )}
                     </select>
                 </FormLine>
                 <FormLine>
                     <label>
                     Tempo Liggação:
                     </label>
-                    <input value={connectionTime}
-                        onChange={(e) => setConnectionTime(e.target.value)}
+                    <input 
                         type="number"
+                        value={callTime}
                         placeholder="minutos"
-                        className="minute-input" />
+                        className="minute-input"
+                        onChange={e => setCallTime(e.target.value)}
+                    />
                 </FormLine>
                 <FormLine>
                 <label>
                 Plano FaleMais:
                 </label>
-                <select value={plan} onChange={(e) => setPlan(e.target.value)}>
-                    <option value="abacate">FaleMais 30</option>
-                    <option value="mexirica">FaleMais 60</option>
-                    <option value="abobrinha">FaleMais 120</option>
+                <select value={planSelected} onChange={e => {
+                    dispatch(setPlan(e.target.value))}
+                }>
+                    ${plans.map((plan) => {
+                        return <option key={plan._id} value={plan.minutes}>{plan.title}</option>
+                    })}
                 </select>
                 </FormLine>
-                <input type="submit" value="Enviar" className="btn-form"/>
+                <input type="submit" value="Enviar" className="btn-form" onClick={e => {
+                    setShowPrice(true);
+                    handleSubmit(e);
+                }}/>
+                <PriceContainer style={{visibility: showPrice ? 'visible' : 'hidden'}}>
+                    <PriceContainerRow>
+                        <CloseIcon src={close} onClick={closePriceContainer}/>
+                    </PriceContainerRow>
+                    <Price>{`R$ ${price}`}</Price>
+                </PriceContainer>
             </form>
         </FormContainer>
     );
