@@ -65,10 +65,12 @@ export const PriceContainer = styled.div`
 `
 
 export const Price = styled.h1`
-    font-size:38px;
+    font-size:22px;
+    line-height: 25px;
     color: ${COLORS.primary};
     text-align: center;
     margin: 30px ;
+    width: 50%;
 `
 
 export const CloseIcon = styled.img`
@@ -78,7 +80,7 @@ export const CloseIcon = styled.img`
     cursor: pointer;
 `
 
-export const PriceContainerRow = styled.div`
+export const PriceHeaderRow = styled.div`
     width: 100%;
     height: 50px;
     display: flex;
@@ -87,5 +89,11 @@ export const PriceContainerRow = styled.div`
 
 export const PriceLegend = styled.span`
     color: ${COLORS.primary};
-    margin-left: 15px;
+    margin: 0 25px;
+`
+
+export const PriceBodyRow = styled.div`
+    display: flex;
+
+
 `

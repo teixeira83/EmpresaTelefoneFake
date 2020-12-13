@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { FormContainer, FormLine, Title, PriceContainer, Price, CloseIcon, PriceContainerRow, PriceLegend } from './styles';
+import { FormContainer, FormLine, Title, PriceContainer, Price, CloseIcon, PriceHeaderRow, PriceBodyRow, PriceLegend } from './styles';
 
 import { setSource, setSources } from '../../redux/modules/sources';
 import { setPlan, setPlans } from '../../redux/modules/plans';
@@ -19,6 +19,7 @@ export default function Form() {
     const [callTime, setCallTime] = useState(0);
     const [showPrice, setShowPrice] = useState(false);
     const [price, setPrice] = useState(0);
+    const [planPrice, setPlanPrice] = useState(0);
 
     useEffect(() => {
         async function getFormSources() {
@@ -71,12 +72,18 @@ export default function Form() {
             plan: planSelected
         }
 
+        
         if(isAValidInputs(formObject)) {
             const callInformation = await taxDataService.getCallInformation(formObject);
-            const callPrice = callInformation.data.callValue;
-            setPrice(`R$ ${parseFloat(callPrice)}`);
+            const callPrice = callInformation.data.callPrice;
+            const planCallPrice = callInformation.data.planCallPrice;
+            setPlanPrice(`R$ ${parseFloat(planCallPrice)}`);
+            setPrice(`R$ ${callPrice}`);
         } else {
-            setPrice('Graças ao Plano Fale Mais, este mês sua conta será de graça.');
+            const callInformation = await taxDataService.getCallInformation(formObject);
+            const callPrice = callInformation.data.callPrice;
+            setPlanPrice('Graças ao Plano Fale Mais, este mês sua conta será de graça.');
+            setPrice(`R$ ${callPrice}`);
         }
     }
 
@@ -140,11 +147,18 @@ export default function Form() {
                     handleSubmit(e);
                 }}/>
                 <PriceContainer style={{visibility: showPrice ? 'visible' : 'hidden'}}>
-                    <PriceContainerRow>
+                    <PriceHeaderRow>
                         <PriceLegend>Sua conda deu:</PriceLegend>
                         <CloseIcon src={close} onClick={closePriceContainer}/>
-                    </PriceContainerRow>
-                    <Price>{price}</Price>
+                    </PriceHeaderRow>
+                    <PriceHeaderRow>
+                    <PriceLegend style={{color: 'black', fontSize: '22px'}}>Com o FaleMais</PriceLegend>
+                    <PriceLegend style={{color: 'black', fontSize: '22px'}}>Sem o FaleMais</PriceLegend>
+                    </PriceHeaderRow>
+                    <PriceBodyRow>
+                        <Price>{planPrice}</Price>
+                        <Price>{price}</Price>
+                    </PriceBodyRow>
                 </PriceContainer>
             </form>
         </FormContainer>

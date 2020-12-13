@@ -20,13 +20,17 @@ module.exports = {
         const indexComparation = destinationList.indexOf(sourceObjectReq.destination);
         
         const surpluTime = callTime - plan;
-        const callTax = parseFloat(taxList[indexComparation]);
-        const minutesInMoneyValue = parseFloat(surpluTime * callTax);
-        const minutesInMoneyValueWithSurpluTax = (minutesInMoneyValue + ( minutesInMoneyValue * 0.10 )).toFixed(2);
         
+        const callTax = parseFloat(taxList[indexComparation]);
+        
+        const valueForPlanCostumers = parseFloat(surpluTime * callTax);
+        const valueForPlanCostumersWithTax = (valueForPlanCostumers + ( valueForPlanCostumers * 0.10 )).toFixed(2);
+
+        const valueForCostumersWithouPlan = parseFloat(callTime * callTax).toFixed(2);
         
         res.status(200).send({
-            callValue: minutesInMoneyValueWithSurpluTax
+            callPrice: valueForCostumersWithouPlan,
+            planCallPrice: valueForPlanCostumersWithTax
         });
         
     }
