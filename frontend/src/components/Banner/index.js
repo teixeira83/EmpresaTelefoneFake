@@ -21,7 +21,7 @@ export default function Banner(){
             </InformationContainer>
             <Carousel {...settings}> 
                 {bannerImages.map((img) => {
-                    return <BannerImage src={img} alt="Foto do Restaurante" />
+                    return <BannerImage key={img} src={img} alt="Imagem de Família Feliz Conversando Pelo Telefone." />
                 })}
             </Carousel>
         </BannerContainer>

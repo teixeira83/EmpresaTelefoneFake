@@ -56,7 +56,7 @@ export const Title = styled.h1`
 export const PriceContainer = styled.div`
     margin-top: 30px;
     max-width: 650px;
-    max-height: 200px;
+    max-height: 300px;
     display:flex;
     flex-direction: column;
     background-color: ${COLORS.third};
@@ -65,7 +65,7 @@ export const PriceContainer = styled.div`
 `
 
 export const Price = styled.h1`
-    font-size:50px;
+    font-size:38px;
     color: ${COLORS.primary};
     text-align: center;
     margin: 30px ;
@@ -82,5 +82,10 @@ export const PriceContainerRow = styled.div`
     width: 100%;
     height: 50px;
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
+`
+
+export const PriceLegend = styled.span`
+    color: ${COLORS.primary};
+    margin-left: 15px;
 `

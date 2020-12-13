@@ -4,7 +4,7 @@ export const Types = {
 };
 
 const initialState = {
-    sourceSelected: null,
+    sourceSelected: '',
     sources: []
 };
 

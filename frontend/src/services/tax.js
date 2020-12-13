@@ -25,7 +25,7 @@ const getCallInformation = (call) => {
 
     return http.get('/calculator', { params });
 }
-
+// eslint-disable-next-line
 export default {
     getAllSources,
     getAllPlans,

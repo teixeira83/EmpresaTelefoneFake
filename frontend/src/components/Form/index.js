@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { FormContainer, FormLine, Title, PriceContainer, Price, CloseIcon, PriceContainerRow } from './styles';
+import { FormContainer, FormLine, Title, PriceContainer, Price, CloseIcon, PriceContainerRow, PriceLegend } from './styles';
 
 import { setSource, setSources } from '../../redux/modules/sources';
 import { setPlan, setPlans } from '../../redux/modules/plans';
@@ -14,7 +14,7 @@ export default function Form() {
 
     const { sources, sourceSelected } = useSelector((state) => state.sources);
     const { plans, planSelected } = useSelector((state) => state.plans);
-    const [destiny, setDestiny] = useState('');
+    const [destiny, setDestiny] = useState('016');
     const [destinys, setDestinys] = useState(['016','017','018']);
     const [callTime, setCallTime] = useState(0);
     const [showPrice, setShowPrice] = useState(false);
@@ -31,7 +31,7 @@ export default function Form() {
 
         }
         getFormSources()
-    },[]);
+    },[dispatch]);
 
     useEffect(() => {
         async function getFormPlans() {
@@ -43,7 +43,7 @@ export default function Form() {
             dispatch(setPlans(planDataList));
         }
         getFormPlans();
-    },[]);
+    },[dispatch]);
 
     function getDestinyOptions(origin) {
         
@@ -57,6 +57,10 @@ export default function Form() {
         setDestinys(destinationsOptions);
     };  
 
+    function isAValidInputs(formObject){
+        return parseFloat(formObject.plan) >= parseFloat(formObject.callTime) ? false : true;
+    }
+
     async function handleSubmit(event) {
         
         event.preventDefault();
@@ -67,12 +71,13 @@ export default function Form() {
             plan: planSelected
         }
 
-        const callInformation = await taxDataService.getCallInformation(formObject);
-        console.log(callInformation);
-        const callPrice = callInformation.data.callValue;
-        setPrice(parseFloat(callPrice));
-
-        
+        if(isAValidInputs(formObject)) {
+            const callInformation = await taxDataService.getCallInformation(formObject);
+            const callPrice = callInformation.data.callValue;
+            setPrice(`R$ ${parseFloat(callPrice)}`);
+        } else {
+            setPrice('Graças ao Plano Fale Mais, este mês sua conta será de graça.');
+        }
     }
 
     const closePriceContainer = () => {
@@ -136,9 +141,10 @@ export default function Form() {
                 }}/>
                 <PriceContainer style={{visibility: showPrice ? 'visible' : 'hidden'}}>
                     <PriceContainerRow>
+                        <PriceLegend>Sua conda deu:</PriceLegend>
                         <CloseIcon src={close} onClick={closePriceContainer}/>
                     </PriceContainerRow>
-                    <Price>{`R$ ${price}`}</Price>
+                    <Price>{price}</Price>
                 </PriceContainer>
             </form>
         </FormContainer>
